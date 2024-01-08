@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'corsheaders',
+
+    'users_app',
 ]
 
 MIDDLEWARE = [
@@ -163,3 +165,8 @@ SWAGGER_SETTINGS = {
         },
     },
 }
+
+AUTH_USER_MODEL = 'users_app.User'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media/'

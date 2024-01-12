@@ -1,9 +1,50 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
 
 NULLABLE = {'blank': True, 'null': True}
+
+
+class UserManager(BaseUserManager):
+    """
+    функция создания пользователя — в нее мы передаем обязательные поля
+    """
+    def create_user(self, email, first_name, last_name,
+                    phone=None, password=None, role='user'):
+        if not email:
+            raise ValueError('Users must have an email address')
+        user = self.model(
+            email=self.normalize_email(email),
+            first_name=first_name,
+            last_name=last_name,
+            phone=phone,
+            role=role
+        )
+        user.is_active = True
+        user.set_password(password)
+        user.save(using=self._db)
+
+        return user
+
+    def create_superuser(self, email, first_name, last_name,
+                         phone=None, password=None):
+        """
+        функция для создания суперпользователя —
+        это можно сделать с помощью команды createsuperuser
+        """
+
+        user = self.create_user(
+            email,
+            first_name=first_name,
+            last_name=last_name,
+            phone=phone,
+            password=password,
+            role='admin'
+        )
+
+        user.save(using=self._db)
+        return user
 
 
 class User(AbstractUser):
@@ -25,8 +66,23 @@ class User(AbstractUser):
     image = models.ImageField(_("avatar"), **NULLABLE, upload_to='media/')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    # Поля, которые будут вызываться при создании через команду createsuperuser
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+
+    objects = UserManager()
+
+    @property
+    def is_admin(self):
+        return self.role == self.ADMIN
+
+    @property
+    def is_superuser(self):
+        return self.is_admin
+
+    @property
+    def is_staff(self):
+        return self.is_admin

@@ -9,6 +9,12 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MyAdsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Advertisement
+        fields = '__all__'
+
+
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review

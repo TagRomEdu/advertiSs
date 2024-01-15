@@ -143,8 +143,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('YA_PASS')
+EMAIL_HOST_PASSWORD = os.getenv('KEY_PASS')
 EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 
 CORS_ALLOWED_ORIGINS = [
     "https://read-only.example.com",  # Замените на адрес вашего бэкенд-сервера
@@ -181,7 +182,12 @@ REST_FRAMEWORK = {
 
 DJOSER = {
     'SERIALIZERS': {
-        'user_create': 'users.serializers.UserRegistrationSerializer'
+        'user_create': 'users_app.serializers.UserRegistrationSerializer'
     },
-    'LOGIN_FIELD': 'email'
+    'LOGIN_FIELD': 'email',
+    'EMAIL': {
+        'from_email': 'm@sster.ru',
+    },
+    'PASSWORD_RESET_CONFIRM_URL':
+        '/users/reset_password_confirm/{uid}/{token}',
 }

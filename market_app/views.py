@@ -1,4 +1,5 @@
 from rest_framework import viewsets, generics
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from market_app.models import Advertisement, Review
@@ -12,6 +13,8 @@ class AdvertisementViewSet(viewsets.ModelViewSet):
     serializer_class = AdvertisementSerializer
     queryset = Advertisement.objects.all()
     pagination_class = AdvertisementPaginator
+    filter_backends = [SearchFilter]
+    search_fields = ['title']
     permission_classes_by_action = {'list': [AllowAny],
                                     'partial_update': [IsAuthorOrAdmin],
                                     'update': [IsAuthorOrAdmin],
@@ -29,6 +32,8 @@ class AdsListAPIView(generics.ListAPIView):
     serializer_class = MyAdsSerializer
     queryset = Advertisement.objects.all()
     pagination_class = AdvertisementPaginator
+    filter_backends = [SearchFilter]
+    search_fields = ['title']
     permission_classes = [IsAuthorOrAdmin]
 
     def get_queryset(self):

@@ -2,7 +2,7 @@ from rest_framework import viewsets, generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from market_app.models import Advertisement, Review
-from market_app.paginators import AdvertisementPaginator
+from market_app.paginators import AdvertisementPaginator, ReviewPaginator
 from market_app.permissions import IsAuthorOrAdmin
 from market_app.serializers import (AdvertisementSerializer,
                                     MyAdsSerializer, ReviewSerializer)
@@ -38,6 +38,7 @@ class AdsListAPIView(generics.ListAPIView):
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
+    pagination_class = ReviewPaginator
     permission_classes_by_action = {'list': [AllowAny],
                                     'partial_update': [IsAuthorOrAdmin],
                                     'update': [IsAuthorOrAdmin],

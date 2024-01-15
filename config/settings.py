@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'djoser',
 
     'users_app',
+    'market_app',
 ]
 
 MIDDLEWARE = [
@@ -185,9 +186,6 @@ DJOSER = {
         'user_create': 'users_app.serializers.UserRegistrationSerializer'
     },
     'LOGIN_FIELD': 'email',
-    'EMAIL': {
-        'from_email': 'm@sster.ru',
-    },
     'PASSWORD_RESET_CONFIRM_URL':
         '/users/reset_password_confirm/{uid}/{token}',
 }

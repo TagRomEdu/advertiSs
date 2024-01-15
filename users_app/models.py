@@ -10,8 +10,8 @@ class UserManager(BaseUserManager):
     """
     функция создания пользователя — в нее мы передаем обязательные поля
     """
-    def create_user(self, email, first_name, last_name,
-                    phone=None, password=None, role='user'):
+    def create_user(self, email, first_name, last_name, role,
+                    phone=None, password=None):
         if not email:
             raise ValueError('Users must have an email address')
         user = self.model(
@@ -61,8 +61,9 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(_("first name"), max_length=150)
     last_name = models.CharField(_("last name"), max_length=150)
-    phone = models.IntegerField(_("phone"), **NULLABLE)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+    phone = models.CharField(_("phone"), max_length=15, **NULLABLE)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES,
+                            default='user')
     image = models.ImageField(_("avatar"), **NULLABLE, upload_to='media/')
 
     USERNAME_FIELD = 'email'
@@ -77,7 +78,7 @@ class User(AbstractUser):
 
     @property
     def is_admin(self):
-        return self.role == self.ADMIN
+        return self.role == 'admin'
 
     @property
     def is_superuser(self):

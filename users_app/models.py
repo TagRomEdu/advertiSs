@@ -10,7 +10,7 @@ class UserManager(BaseUserManager):
     """
     функция создания пользователя — в нее мы передаем обязательные поля
     """
-    def create_user(self, email, first_name, last_name, role,
+    def create_user(self, email, first_name, last_name, role='user',
                     phone=None, password=None):
         if not email:
             raise ValueError('Users must have an email address')
@@ -67,8 +67,9 @@ class User(AbstractUser):
     image = models.ImageField(_("avatar"), **NULLABLE, upload_to='media/')
 
     USERNAME_FIELD = 'email'
-    # Поля, которые будут вызываться при создании через команду createsuperuser
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    # Поля, которые будут вызываться при создании
+    # через команду createsuperuser и create_user
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', 'image']
 
     class Meta:
         verbose_name = "Пользователь"

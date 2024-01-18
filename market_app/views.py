@@ -27,6 +27,10 @@ class AdvertisementViewSet(viewsets.ModelViewSet):
                                                       [IsAuthenticated])
                 ]
 
+    def perform_create(self, serializer):
+        adv = serializer.save(author=self.request.user)
+        adv.save()
+
 
 class AdsListAPIView(generics.ListAPIView):
     serializer_class = MyAdsSerializer
@@ -53,3 +57,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         return [permission() for permission in
                 self.permission_classes_by_action.get(self.action)]
+
+    def perform_create(self, serializer):
+        review = serializer.save(author=self.request.user)
+        review.save()

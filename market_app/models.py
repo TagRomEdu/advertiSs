@@ -11,7 +11,7 @@ class Advertisement(models.Model):
     price = models.DecimalField(_("price"), max_digits=10, decimal_places=2)
     description = models.TextField(_("description"))
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               on_delete=models.CASCADE)
+                               on_delete=models.CASCADE, **NULLABLE)
     created_at = models.DateTimeField(_("date of creation"), auto_now_add=True)
     image = models.ImageField(_("preview of advirtisement"),
                               upload_to='images/', **NULLABLE)
@@ -26,7 +26,7 @@ class Advertisement(models.Model):
 class Review(models.Model):
     text = models.TextField(_("review's text"))
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               on_delete=models.CASCADE)
+                               on_delete=models.CASCADE, **NULLABLE)
     ad = models.ForeignKey(Advertisement,
                            on_delete=models.CASCADE)
     created_at = models.DateTimeField(_("date of creation"), auto_now_add=True)

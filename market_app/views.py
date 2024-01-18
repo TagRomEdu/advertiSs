@@ -56,7 +56,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         return [permission() for permission in
-                self.permission_classes_by_action.get(self.action)]
+                self.permission_classes_by_action.get(self.action,
+                                                      [IsAuthenticated])
+                ]
 
     def perform_create(self, serializer):
         review = serializer.save(author=self.request.user)

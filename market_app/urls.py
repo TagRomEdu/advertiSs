@@ -7,13 +7,11 @@ from market_app.views import (AdsListAPIView, AdvertisementViewSet,
 
 app_name = MarketAppConfig.name
 
-ads_router = DefaultRouter()
-ads_router.register(r'ads', AdvertisementViewSet, basename='ads')
-reviews_router = DefaultRouter()
-reviews_router.register(r'reviews', ReviewViewSet, basename='reviews')
+router = DefaultRouter()
+router.register(r'ads', AdvertisementViewSet, basename='ads')
+router.register(r'reviews', ReviewViewSet, basename='reviews')
 
 urlpatterns = [
-    path('', include(ads_router.urls)),
-    path('', include(reviews_router.urls)),
+    path('', include(router.urls)),
     path('advs/me/', AdsListAPIView.as_view(), name='my_ads')
 ]

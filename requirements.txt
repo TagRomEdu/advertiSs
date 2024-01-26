@@ -17,11 +17,13 @@ djoser==2.2.2
 drf-yasg==1.21.7
 exceptiongroup==1.2.0
 executing==2.0.1
+flake8==7.0.0
 idna==3.6
 inflection==0.5.1
 ipython==8.19.0
 jedi==0.19.1
 matplotlib-inline==0.1.6
+mccabe==0.7.0
 oauthlib==3.2.2
 packaging==23.2
 parso==0.8.3
@@ -31,7 +33,9 @@ prompt-toolkit==3.0.43
 psycopg2-binary==2.9.9
 ptyprocess==0.7.0
 pure-eval==0.2.2
+pycodestyle==2.11.1
 pycparser==2.21
+pyflakes==3.2.0
 Pygments==2.17.2
 PyJWT==2.8.0
 python-dotenv==1.0.0

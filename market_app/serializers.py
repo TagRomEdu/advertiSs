@@ -21,12 +21,6 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         return obj.review_set.count()
 
 
-class MyAdsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Advertisement
-        fields = '__all__'
-
-
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review

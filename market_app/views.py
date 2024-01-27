@@ -6,7 +6,7 @@ from market_app.models import Advertisement, Review
 from market_app.paginators import AdvertisementPaginator, ReviewPaginator
 from market_app.permissions import IsAuthorOrAdmin
 from market_app.serializers import (AdvertisementSerializer,
-                                    MyAdsSerializer, ReviewSerializer)
+                                    ReviewSerializer)
 
 
 class AdvertisementViewSet(viewsets.ModelViewSet):
@@ -33,7 +33,7 @@ class AdvertisementViewSet(viewsets.ModelViewSet):
 
 
 class AdsListAPIView(generics.ListAPIView):
-    serializer_class = MyAdsSerializer
+    serializer_class = AdvertisementSerializer
     queryset = Advertisement.objects.all()
     pagination_class = AdvertisementPaginator
     filter_backends = [SearchFilter]
